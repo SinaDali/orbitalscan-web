@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — OrbitalScan</title>
+  <meta name="description" content="OrbitalScan member dashboard: subscription status, renewal date, and available plans." />
+  <style>
+    :root{
+      --bg:#0b0b13;
+      --card:#121223;
+      --card2:#141428;
+      --text:#e9e9f1;
+      --muted:#b7b7c9;
+      --primary:#8a5cff;
+      --accent:#3dd3ff;
+      --ring:0 0 0 2px rgba(61,211,255,0.2),0 0 30px rgba(138,92,255,0.15);
+      --good:#22c55e;
+      --bad:#ff4d6d;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:960px;margin:0 auto;padding:24px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));}
+    .brand h1{font-size:18px;margin:0;font-weight:700}
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{opacity:.9;padding:8px 10px;border-radius:10px}
+    .menu a:hover{background:rgba(255,255,255,.05)}
+    h2{font-size:28px;margin-top:0}
+    .lead{color:var(--muted)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px}
+    .status{display:flex;align-items:center;gap:10px;margin:12px 0}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow:0 0 10px rgba(34,197,94,.7)}
+    .plans{margin-top:30px}
+    .plan{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px;margin-bottom:16px}
+    .btn{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#0b0b13;box-shadow:var(--ring)}
+    footer{margin-top:40px;padding:20px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.1);text-align:center}
+    @media(max-width:720px){.grid-2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <h1>OrbitalScan</h1>
+      </div>
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">Who We Are</a>
+        <a href="contact.html">Contact</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+    </nav>
+
+    <header>
+      <h2>Member Dashboard</h2>
+      <p class="lead">Here you can check your subscription, renewal, and available plans.</p>
+    </header>
+
+    <section class="card">
+      <h3 style="margin-top:0">Your Subscription</h3>
+      <div class="status">
+        <span class="dot"></span>
+        <strong>Active</strong>
+      </div>
+      <p class="lead">Plan: <strong>Monthly</strong></p>
+      <p class="lead">Joined: Jan 12, 2025</p>
+      <p class="lead">Valid until: Feb 12, 2025</p>
+    </section>
+
+    <section class="plans">
+      <h3>Upgrade or Renew</h3>
+      <div class="plan">
+        <h4>Monthly — 35 USDT</h4>
+        <p class="lead">One month full access.</p>
+        <a class="btn btn-primary" href="pricing.html">Choose Plan</a>
+      </div>
+      <div class="plan">
+        <h4>Yearly — 350 USDT</h4>
+        <p class="lead">Best value, 2 months free.</p>
+        <a class="btn btn-primary" href="pricing.html">Choose Plan</a>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> OrbitalScan — <a href="index.html">Home</a>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
