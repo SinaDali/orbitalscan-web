@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Who We Are — OrbitalScan</title>
+  <meta name="description" content="OrbitalScan has been curating crypto alpha since 2019. Learn our mission, timeline, and how we vet signals." />
+  <style>
+    :root{
+      --bg:#0b0b13;
+      --card:#121223;
+      --card2:#141428;
+      --text:#e9e9f1;
+      --muted:#b7b7c9;
+      --primary:#8a5cff;
+      --accent:#3dd3ff;
+      --ring:0 0 0 2px rgba(61,211,255,0.2),0 0 30px rgba(138,92,255,0.15);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:980px;margin:0 auto;padding:24px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));}
+    .brand h1{font-size:18px;margin:0;font-weight:700}
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{opacity:.9;padding:8px 10px;border-radius:10px}
+    .menu a:hover{background:rgba(255,255,255,.05)}
+    h2{font-size:32px;margin-top:0}
+    .lead{color:var(--muted)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px}
+    .section{margin:28px 0}
+    .pill{display:inline-block;padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;margin:6px 8px 0 0}
+    .timeline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+    .muted{color:var(--muted)}
+    .values{display:flex;flex-wrap:wrap;gap:10px}
+    footer{margin-top:40px;padding:20px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.1);text-align:center}
+    @media(max-width:860px){
+      .grid-2{grid-template-columns:1fr}
+      .timeline{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <h1>OrbitalScan</h1>
+      </div>
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">Who We Are</a>
+      </div>
+    </nav>
+
+    <header class="section">
+      <h2>Who We Are</h2>
+      <p class="lead">Since 2019 we’ve curated real, low-noise opportunities across tokens, NFTs, and airdrops. Human judgment + on-chain data — not hype.</p>
+      <div class="values">
+        <span class="pill">Curation over volume</span>
+        <span class="pill">On-chain verification</span>
+        <span class="pill">Risk-first</span>
+        <span class="pill">Chain-agnostic</span>
+        <span class="pill">Community-driven</span>
+      </div>
+    </header>
+
+    <section class="section grid-2">
+      <div class="card">
+        <h3 style="margin-top:0">Our Mission</h3>
+        <p class="muted">Cut through the noise. We highlight a small number of high-signal opportunities backed by transparent thesis notes and risk flags. Our goal is to save your time and protect your attention while keeping upside intact.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">How we vet</h3>
+        <ul class="muted">
+          <li>Founders & social graph (bot/noise checks)</li>
+          <li>Token & liquidity sanity (FDV, unlocks, LP)</li>
+          <li>On-chain flow (holders, dex volume, bridges)</li>
+          <li>Risk notes (red flags, timelines, catalysts)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 style="margin:0 0 10px">Timeline</h3>
+      <div class="timeline">
+        <div class="card">
+          <strong>2019–2021</strong>
+          <p class="muted">Research & early community. First curated signals.</p>
+        </div>
+        <div class="card">
+          <strong>2022–2023</strong>
+          <p class="muted">Expanded to multi-chain coverage. Built internal tools.</p>
+        </div>
+        <div class="card">
+          <strong>2024–Today</strong>
+          <p class="muted">OrbitalScan portal + Telegram MiniApp. Responsible scaling.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <div class="card">
+        <h3 style="margin-top:0">Team</h3>
+        <p class="muted">Lean, practitioner-led. We ship fast, prioritize clarity, and avoid hype. If you’re a project with serious intent, <a href="contact.html">get in touch</a>.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">What members get</h3>
+        <ul class="muted">
+          <li>Signals feed: token/NFT entries with thesis & risk</li>
+          <li>Airdrops & quests: low-effort, real upside</li>
+          <li>Dashboard: membership status & renewal</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section card">
+      <div class="grid-2">
+        <div>
+          <h3 style="margin-top:0">Work with us</h3>
+          <p class="muted">We prefer quality over buzz. If your project meets that bar, we’re open to collaboration and due diligence.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;flex-wrap:wrap">
+          <a class="pill" href="pricing.html">View Pricing</a>
+          <a class="pill" href="contact.html">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> OrbitalScan — <a href="pricing.html">Pricing</a> • <a href="index.html">Home</a>
+    </footer>
+  </div>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
