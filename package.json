@@ -1,0 +1,12 @@
+{
+  "name": "orbitalscan-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "live-server",
+    "build": "echo \"Static build\""
+  },
+  "dependencies": {
+    "@netlify/blobs": "^6.4.0"
+  }
+}
