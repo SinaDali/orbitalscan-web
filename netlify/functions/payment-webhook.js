@@ -1,17 +1,15 @@
 // netlify/functions/payment-webhook.js
 /**
- * OrbitalScan — Payment Webhook (Placeholder)
+ * OrbitalScan — Payment Webhook (Blobs-enabled)
  *
- * Purpose:
- * - Receive POST events from the crypto checkout provider (Helio or similar)
- * - Verify the webhook secret
- * - (Next steps) Mark the user as active in a datastore (Supabase / Netlify Blobs)
- *
- * Endpoint (after deploy): https://<your-site>/.netlify/functions/payment-webhook
- *
- * Required environment variable (set in Netlify > Site settings > Build & deploy > Environment):
- *   HELIO_WEBHOOK_SECRET=<secret-from-provider>
+ * Flow:
+ *  - Verify webhook secret (X-Helio-Signature === HELIO_WEBHOOK_SECRET)
+ *  - Parse payload
+ *  - Compute membership expiry based on plan
+ *  - Persist membership to Netlify Blobs (store: "members")
  */
+
+import { getStore } from "@netlify/blobs";
 
 export async function handler(event) {
   try {
@@ -19,55 +17,57 @@ export async function handler(event) {
       return { statusCode: 405, body: "Method Not Allowed" };
     }
 
-    // 1) Verify signature / secret (simple shared-secret check for now)
+    // 1) Verify secret
     const secret = process.env.HELIO_WEBHOOK_SECRET;
     const signature = event.headers["x-helio-signature"] || event.headers["X-Helio-Signature"];
-    if (!secret) {
-      console.warn("[Webhook] Missing HELIO_WEBHOOK_SECRET env var");
-      return { statusCode: 500, body: "Server misconfigured" };
-    }
-    if (!signature || signature !== secret) {
-      console.warn("[Webhook] Invalid or missing signature");
-      return { statusCode: 401, body: "Unauthorized" };
-    }
+    if (!secret) return { statusCode: 500, body: "Server misconfigured" };
+    if (!signature || signature !== secret) return { statusCode: 401, body: "Unauthorized" };
 
-    // 2) Parse event body
+    // 2) Parse payload
     const payload = JSON.parse(event.body || "{}");
-
-    // Expected minimal payload shape (we will refine later):
-    // {
-    //   "event": "payment_succeeded",
-    //   "amount": 35,
-    //   "currency": "USDT",
-    //   "plan": "monthly" | "yearly",
-    //   "email": "user@email.com",
-    //   "wallet": "0x... or solana addr",
-    //   "txHash": "0x....",
-    //   "timestamp": 1712345678
-    // }
-
-    console.log("[Webhook] Received:", payload);
-
     if (payload.event !== "payment_succeeded") {
-      // Ignore other events for now
       return json(200, { ok: true, ignored: true });
     }
 
-    // 3) TODO: persist membership (phase 2)
-    //    Option A: Netlify Blobs (serverless key-value)
-    //    Option B: Supabase (Postgres + Auth)
-    //    For now, we simply acknowledge success.
-    //    We'll wire real persistence in the next step.
+    const plan = String(payload.plan || "").toLowerCase(); // monthly | yearly
+    const email = (payload.email || "").trim().toLowerCase();
+    const wallet = (payload.wallet || "").trim();
 
-    // Demo response
-    return json(200, {
-      ok: true,
-      received: true,
-      plan: payload.plan || null,
-      email: payload.email || null,
-      wallet: payload.wallet || null,
-      note: "Membership activation will be persisted in the next step."
-    });
+    if (!["monthly", "yearly"].includes(plan)) {
+      return json(400, { ok: false, error: "Invalid plan" });
+    }
+    if (!email && !wallet) {
+      return json(400, { ok: false, error: "Email or wallet required" });
+    }
+
+    // 3) Compute expiry
+    const now = new Date();
+    const startISO = now.toISOString();
+    const expires = new Date(now);
+    if (plan === "monthly") expires.setMonth(expires.getMonth() + 1);
+    if (plan === "yearly") expires.setFullYear(expires.getFullYear() + 1);
+    const expiryISO = expires.toISOString();
+
+    // 4) Build record
+    const member = {
+      email: email || null,
+      wallet: wallet || null,
+      plan,
+      amount: payload.amount || null,
+      currency: payload.currency || null,
+      txHash: payload.txHash || null,
+      started_at: startISO,
+      expires_at: expiryISO,
+      provider: "helio",
+      status: "active"
+    };
+
+    // 5) Persist to Netlify Blobs
+    const store = getStore({ name: "members", consistency: "strong" });
+    const key = email ? `email:${email}` : `wallet:${wallet.toLowerCase()}`;
+    await store.setJSON(key, member);
+
+    return json(200, { ok: true, saved: true, key, expires_at: expiryISO });
   } catch (err) {
     console.error("[Webhook] Error:", err);
     return { statusCode: 500, body: "Internal Server Error" };
