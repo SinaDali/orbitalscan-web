@@ -7,6 +7,7 @@
     "build": "echo \"Static build\""
   },
   "dependencies": {
-    "@netlify/blobs": "^6.4.0"
+    "@netlify/blobs": "^6.4.0",
+    "@supabase/supabase-js": "^2.57.0"
   }
 }
